@@ -14,8 +14,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-   justify-content: flex-end;
-  text-align: left;
+   justify-content: center;
+  text-align: center;
 }
 
 header img {
@@ -38,7 +38,9 @@ header img {
     padding: 0;               /* Eliminamos padding para que se centre bien */
   }
   
-
+#toggleNav {
+  background-color: #000;
+}
 nav a {
   display: block;
   color: yellow;
@@ -149,4 +151,58 @@ footer {
   width: 200px;
   margin: 0;
   padding: 0;
+}
+
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2000;
+  background-color: #000;
+  color: yellow;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    left: -220px;
+    transition: left 0.3s ease;
+  }
+
+  nav.open {
+    left: 0;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  header {
+    justify-content: center;
+    text-align: center;
+  }
+
+  section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  section img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .text-block {
+    max-width: 100%;
+  }
 }
