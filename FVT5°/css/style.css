@@ -138,3 +138,13 @@ footer {
 .dropdown:hover .dropbtn {
   background-color: #7d7c6d;
 }
+.logo10{
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 200px;
+  width: 200px;
+  margin: 0;
+  padding: 0;
+}
