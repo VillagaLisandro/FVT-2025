@@ -1,7 +1,11 @@
+html {
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
+
 
 header {
   background-color: #000;
