@@ -27,3 +27,14 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 });
+
+  document.querySelectorAll('.footer-icons a').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      icon.style.transform = 'scale(1.2)';
+    });
+
+    icon.addEventListener('mouseleave', () => {
+      icon.style.transform = 'scale(1)';
+    });
+  });
+
