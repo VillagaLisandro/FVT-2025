@@ -4,8 +4,8 @@ html {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #ffeb00, #675e00);
 }
-
 
 header {
   background-color: #000;
@@ -45,7 +45,7 @@ nav a {
 
 section {
   display: flex;
-  background-color: #ffeb00;
+  background: transparent;
   margin-bottom: 2rem;
   padding: 1rem;
   align-items: center;
