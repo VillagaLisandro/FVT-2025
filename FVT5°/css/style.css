@@ -206,3 +206,20 @@ footer {
     max-width: 100%;
   }
 }
+.faq-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  font-family: 'Roboto', sans-serif;
+}
+
+.faq-item h3 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.faq-item p {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
