@@ -36,3 +36,26 @@ window.addEventListener('scroll', () => {
     });
   });
 
+document.querySelectorAll('.faq-item h3').forEach(pregunta => {
+  pregunta.style.cursor = 'pointer';
+  const respuesta = pregunta.nextElementSibling;
+  if (respuesta) {
+    respuesta.style.maxHeight = "0";
+    respuesta.style.overflow = "hidden";
+    respuesta.style.transition = "all 0.3s ease";
+    respuesta.style.opacity = 0;
+  }
+
+  pregunta.addEventListener('click', () => {
+    const respuesta = pregunta.nextElementSibling;
+    if (respuesta.classList.contains('visible')) {
+      respuesta.classList.remove('visible');
+      respuesta.style.maxHeight = "0";
+      respuesta.style.opacity = 0;
+    } else {
+      respuesta.classList.add('visible');
+      respuesta.style.maxHeight = respuesta.scrollHeight + "px";
+      respuesta.style.opacity = 1;
+    }
+  });
+});

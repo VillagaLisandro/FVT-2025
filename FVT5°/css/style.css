@@ -223,3 +223,26 @@ footer {
   color: #555;
   line-height: 1.5;
 }
+.faq-item {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+}
+
+.faq-item h3 {
+  margin: 0;
+  color: #333;
+}
+
+.faq-item p, .faq-item ul {
+  margin: 5px 0 0;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item p.visible, .faq-item ul.visible {
+  opacity: 1;
+  max-height: 500px;
+}
