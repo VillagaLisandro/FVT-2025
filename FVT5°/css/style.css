@@ -331,7 +331,7 @@ section img:hover {
 }
 
 .dropdown-content a {
-  color: var(--text-color);
+  color: black;
   padding: 1rem 1.5rem;
   text-decoration: none;
   display: block;
