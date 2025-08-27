@@ -3,25 +3,727 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O.R.A. Simulator - Funciones en Tiempo Real</title>
-  <link href="css/style_merged.css" rel="stylesheet">
+  <title>O.R.A - Optimización Educativa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="img/RA_10-removebg-preview.png">
+  <style>
+/* Variables CSS para consistencia */
+:root {
+  --primary-color: #000000;
+  --secondary-color: #dbca34;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --text-color: #ffffff;
+  --text-light: #7f8c8d;
+  --bg-color: #ecf0f1;
+  --white: #ffffff;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --border-radius: 10px;
+  --transition: all 0.3s ease;
+  --simulator-bg: rgba(255, 255, 255, 0.1);
+  --simulator-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Reset y configuración base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background: linear-gradient(135deg, #000000 0%, #dee94e 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header mejorado */
+header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #c8f015 100%);
+  color: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo09 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.logo09:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(52, 152, 219, 0.5));
+}
+
+header div {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+header strong {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Navegación mejorada */
+nav {
+  background: #0000003b;
+  box-shadow: var(--shadow);
+  padding: 0 2rem;
+  position: relative;
+}
+
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+}
+
+.menu-btn:hover {
+  background: var(--bg-color);
+  transform: scale(1.1);
+}
+
+.menu-btn img {
+  transition: var(--transition);
+  width: 25px;
+  height: 25px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 500;
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+  margin: 0.5rem 0.25rem;
+}
+
+nav a:hover {
+  background: var(--secondary-color);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Contenido principal */
+section {
+  background: transparent;
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+section h2 {
+  color: #fdfdfd;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+}
+
+section h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+/* Container específico para el simulador */
+.container {
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Cards del simulador con efecto glass */
+.simulator-card {
+  background: var(--simulator-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--simulator-border);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.simulator-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+  border-radius: 15px 15px 0 0;
+}
+
+.simulator-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Reloj */
+.clock-display {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.time-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--white);
+  text-shadow: 0 0 20px var(--secondary-color);
+  margin-bottom: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.date-display {
+  font-size: 1.2rem;
+  color: #cccccc;
+  margin-bottom: 1rem;
+}
+
+.format-toggle {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.format-toggle:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+/* Cronómetro */
+.chrono-display {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.chrono-time {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2rem;
+  font-family: 'Courier New', monospace;
+}
+
+.chrono-controls, .timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.chrono-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 100px;
+}
+
+.start-btn {
+  background: var(--success-color);
+  color: var(--white);
+}
+
+.stop-btn {
+  background: var(--accent-color);
+  color: var(--white);
+}
+
+.reset-btn {
+  background: var(--warning-color);
+  color: var(--white);
+}
+
+.chrono-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.chrono-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Temporizador */
+.timer-display {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.timer-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.time-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time-input-group label {
+  font-size: 0.9rem;
+  color: #cccccc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.time-input {
+  width: 80px;
+  padding: 0.8rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.timer-time {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2rem;
+  font-family: 'Courier New', monospace;
+}
+
+.timer-progress {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.progress-ring {
+  position: relative;
+  display: inline-block;
+}
+
+.progress-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  stroke-dasharray: 339.292;
+  stroke-dashoffset: 339.292;
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.timer-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+/* Sensores ambientales */
+.env-readings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.reading {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.reading-label {
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.reading-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.reading-unit {
+  font-size: 1rem;
+  color: var(--white);
+}
+
+/* Decibelímetro */
+.sound-display {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.decibel-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.sound-level {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+
+.level-low {
+  background: var(--success-color);
+  color: var(--white);
+}
+
+.level-normal {
+  background: var(--warning-color);
+  color: var(--white);
+}
+
+.level-high {
+  background: var(--accent-color);
+  color: var(--white);
+}
+
+.sound-bar {
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin: 1rem 0;
+}
+
+.sound-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
+.mic-toggle {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: var(--transition);
+}
+
+.mic-toggle:hover {
+  background: var(--white);
+  transform: scale(1.05);
+}
+
+.mic-toggle.active {
+  background: var(--accent-color);
+  color: var(--white);
+}
+
+/* Indicadores de estado */
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  animation: blink 2s infinite;
+}
+
+.status-active {
+  background: var(--success-color);
+}
+
+.status-inactive {
+  background: #666;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.simulator-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.simulator-card:nth-child(1) { animation-delay: 0.1s; }
+.simulator-card:nth-child(2) { animation-delay: 0.2s; }
+.simulator-card:nth-child(3) { animation-delay: 0.3s; }
+.simulator-card:nth-child(4) { animation-delay: 0.4s; }
+.simulator-card:nth-child(5) { animation-delay: 0.5s; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    z-index: 999;
+  }
+
+  nav.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  nav a {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    margin: 0;
+    color: var(--primary-color);
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  .time-display {
+    font-size: 2.5rem;
+  }
+
+  .chrono-time, .timer-time {
+    font-size: 2rem;
+  }
+
+  .decibel-value {
+    font-size: 2.5rem;
+  }
+
+  .env-readings {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-inputs {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .timer-controls, .chrono-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header {
+    padding: 1rem;
+  }
+
+  section {
+    padding: 1.5rem;
+  }
+
+  section h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .simulator-card {
+    padding: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+  }
+  
+  .time-display {
+    font-size: 2rem;
+  }
+  
+  .chrono-time, .timer-time {
+    font-size: 1.8rem;
+  }
+
+  header strong {
+    font-size: 1.4rem;
+  }
+
+  header div {
+    font-size: 1rem;
+  }
+
+  section h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Indicador de scroll */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+  z-index: 9999;
+  transition: width 0.1s ease;
+}
+
+/* Mejoras de accesibilidad */
+.format-toggle:focus, .chrono-btn:focus, .mic-toggle:focus {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+/* Estados de carga */
+.app-initialized {
+  opacity: 1;
+}
+
+.page-hidden * {
+  animation-play-state: paused;
+}
+  </style>
 </head>
 <body>
-  <header>
-    <img src="img/RA_10-removebg-preview.png" alt="Logo O.R.A" class="logo09">
-    <div class="header-text">
-      <strong>O.R.A. Simulator</strong><br>
-      Optimización, Rendimiento y Asistencia - Demo Interactivo
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-    </nav>
-  </header>
 
-  <div class="container">
+  <header>
+     <img src="img/RA_10-removebg-preview.png" alt="Logo O.R.A" class="logo09">
+    <div>
+      <strong>O.R.A.</strong><br>
+      Optimización, Rendimiento y Asistencia
+    </div>
+  </header>
+   
+  <nav>
+    <button id="toggleNav" class="menu-btn"><img src="img/gratis-png-boton-de-hamburguesa-iconos-de-la-computadora-lista-desplegable-menu.png" width="25" height="25" alt=""></button>
+    <a href="index.html">Home</a>
+  </nav>
+   
+  <section>
+    <h2>Simulador O.R.A.</h2>
+    
+    <div class="container">
     <!-- Clock Card -->
     <div class="simulator-card">
-      <h2 class="card-title">⏰ Reloj en Tiempo Real</h2>
+      <h2 class="card-title">Reloj en Tiempo Real</h2>
       <div class="clock-display">
         <div class="time-display" id="currentTime">00:00:00</div>
         <div class="date-display" id="currentDate">Cargando fecha...</div>
@@ -31,7 +733,7 @@
 
     <!-- Chronometer Card -->
     <div class="simulator-card">
-      <h2 class="card-title">⏱️ Cronómetro</h2>
+      <h2 class="card-title">Cronómetro</h2>
       <div class="chrono-display">
         <div class="chrono-time" id="chronoTime">00:00:00</div>
         <div class="chrono-controls">
@@ -44,7 +746,7 @@
 
     <!-- Timer Card -->
     <div class="simulator-card">
-      <h2 class="card-title">⏲️ Temporizador</h2>
+      <h2 class="card-title">Temporizador</h2>
       <div class="timer-display">
         <div class="timer-inputs" id="timerInputs">
           <div class="time-input-group">
@@ -80,7 +782,7 @@
 
     <!-- Environment Card -->
     <div class="simulator-card">
-      <h2 class="card-title">🌡️ Sensor Ambiental</h2>
+      <h2 class="card-title">Sensor Ambiental</h2>
       <div class="env-readings">
         <div class="reading">
           <div class="reading-label">Temperatura</div>
@@ -94,14 +796,14 @@
         </div>
       </div>
       <div style="text-align: center; margin-top: 1rem; color: #cccccc; font-size: 0.9rem;">
-        ⚡ Actualización automática cada 5 segundos
+        Actualización automática cada 5 segundos
         <span class="status-indicator status-active"></span>
       </div>
     </div>
 
     <!-- Sound Meter Card -->
     <div class="simulator-card">
-      <h2 class="card-title">🔊 Decibelímetro</h2>
+      <h2 class="card-title">Decibelímetro</h2>
       <div class="sound-display">
         <div class="decibel-value" id="decibelValue">45</div>
         <div style="color: #cccccc; margin-bottom: 1rem;">dB</div>
@@ -109,7 +811,7 @@
         <div class="sound-bar">
           <div class="sound-fill" id="soundFill" style="width: 30%; background: var(--success-color);"></div>
         </div>
-        <button class="mic-toggle" id="micToggle">🎤 Activar Micrófono</button>
+        <button class="mic-toggle" id="micToggle">Activar Micrófono</button>
         <div style="margin-top: 1rem; color: #cccccc; font-size: 0.9rem;">
           Estado: <span id="micStatus">Simulación</span>
           <span class="status-indicator status-inactive" id="micIndicator"></span>
@@ -117,6 +819,779 @@
       </div>
     </div>
   </div>
-  <script src="js/script_merged.js"></script>
+  </section>
+
+<script>
+// Configuración principal
+const config = {
+  animationDuration: 300,
+  scrollOffset: 100,
+  autoHideNav: true
+};
+
+// Estado de la aplicación
+const appState = {
+  navOpen: false,
+  currentSection: 'home',
+  faqStates: new Map(),
+  is24HourFormat: true,
+  chronoRunning: false,
+  chronoStartTime: 0,
+  chronoElapsed: 0,
+  timerRunning: false,
+  timerStartTime: 0,
+  timerDuration: 0,
+  timerRemaining: 0,
+  microphoneActive: false,
+  audioContext: null,
+  microphone: null,
+  analyzer: null
+};
+
+// Funciones de utilidad
+const utils = {
+  // Debounce para optimizar eventos
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  },
+
+  // Smooth scroll personalizado
+  smoothScroll(target, duration = 800) {
+    const targetElement = document.querySelector(target);
+    if (!targetElement) return;
+
+    const targetPosition = targetElement.offsetTop - config.scrollOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    function easeInOutQuad(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
+  },
+
+  // Formatear tiempo
+  formatTime: (date, is24Hour = true) => {
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: !is24Hour
+    };
+    return date.toLocaleTimeString('es-ES', options);
+  },
+
+  formatDate: (date) => {
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    return date.toLocaleDateString('es-ES', options);
+  },
+
+  formatChronoTime: (milliseconds) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  },
+
+  formatTimerTime: (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  },
+
+  randomRange: (min, max) => {
+    return Math.random() * (max - min) + min;
+  },
+
+  // Crear indicador de scroll
+  createScrollIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'scroll-indicator';
+    document.body.appendChild(indicator);
+    return indicator;
+  }
+};
+
+// Gestión de navegación
+const navigation = {
+  init() {
+    this.setupToggle();
+    this.setupScrollIndicator();
+    this.handleScroll();
+  },
+
+  setupToggle() {
+    const toggleBtn = document.getElementById('toggleNav');
+    const nav = document.querySelector('nav');
+    
+    if (toggleBtn && nav) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggle();
+      });
+
+      // Cerrar menú al hacer click fuera
+      document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
+          this.close();
+        }
+      });
+
+      // Cerrar menú con Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.close();
+        }
+      });
+    }
+  },
+
+  toggle() {
+    appState.navOpen = !appState.navOpen;
+    const nav = document.querySelector('nav');
+    if (nav) {
+      nav.classList.toggle('active', appState.navOpen);
+    }
+  },
+
+  close() {
+    appState.navOpen = false;
+    const nav = document.querySelector('nav');
+    if (nav) {
+      nav.classList.remove('active');
+    }
+  },
+
+  setupScrollIndicator() {
+    const indicator = utils.createScrollIndicator();
+    
+    window.addEventListener('scroll', utils.debounce(() => {
+      const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      indicator.style.width = scrolled + '%';
+    }, 10));
+  },
+
+  handleScroll() {
+    // Auto-hide navigation on scroll (mobile)
+    let lastScrollY = window.pageYOffset;
+    
+    window.addEventListener('scroll', utils.debounce(() => {
+      const currentScrollY = window.pageYOffset;
+      const nav = document.querySelector('nav');
+      
+      if (config.autoHideNav && nav && window.innerWidth <= 768) {
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          nav.style.transform = 'translateY(-100%)';
+        } else {
+          nav.style.transform = 'translateY(0)';
+        }
+      }
+      
+      lastScrollY = currentScrollY;
+    }, 100));
+  }
+};
+
+// Gestión del reloj
+const clock = {
+  init() {
+    this.updateClock();
+    this.setupFormatToggle();
+    setInterval(() => this.updateClock(), 1000);
+  },
+
+  updateClock() {
+    const now = new Date();
+    const timeElement = document.getElementById('currentTime');
+    const dateElement = document.getElementById('currentDate');
+    
+    if (timeElement) {
+      timeElement.textContent = utils.formatTime(now, appState.is24HourFormat);
+    }
+    
+    if (dateElement) {
+      dateElement.textContent = utils.formatDate(now);
+    }
+  },
+
+  setupFormatToggle() {
+    const toggleBtn = document.getElementById('formatToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        appState.is24HourFormat = !appState.is24HourFormat;
+        toggleBtn.textContent = appState.is24HourFormat ? 'Cambiar a 12h' : 'Cambiar a 24h';
+        this.updateClock();
+      });
+    }
+  }
+};
+
+// Gestión del cronómetro
+const chronometer = {
+  init() {
+    this.setupControls();
+    this.updateDisplay();
+    setInterval(() => this.update(), 100);
+  },
+
+  setupControls() {
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    if (startBtn) {
+      startBtn.addEventListener('click', () => this.start());
+    }
+    
+    if (stopBtn) {
+      stopBtn.addEventListener('click', () => this.stop());
+    }
+    
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => this.reset());
+    }
+  },
+
+  start() {
+    if (!appState.chronoRunning) {
+      appState.chronoRunning = true;
+      appState.chronoStartTime = Date.now() - appState.chronoElapsed;
+      this.updateButtons();
+    }
+  },
+
+  stop() {
+    if (appState.chronoRunning) {
+      appState.chronoRunning = false;
+      this.updateButtons();
+    }
+  },
+
+  reset() {
+    appState.chronoRunning = false;
+    appState.chronoElapsed = 0;
+    appState.chronoStartTime = 0;
+    this.updateDisplay();
+    this.updateButtons();
+  },
+
+  update() {
+    if (appState.chronoRunning) {
+      appState.chronoElapsed = Date.now() - appState.chronoStartTime;
+      this.updateDisplay();
+    }
+  },
+
+  updateDisplay() {
+    const display = document.getElementById('chronoTime');
+    if (display) {
+      display.textContent = utils.formatChronoTime(appState.chronoElapsed);
+    }
+  },
+
+  updateButtons() {
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    
+    if (startBtn) startBtn.disabled = appState.chronoRunning;
+    if (stopBtn) stopBtn.disabled = !appState.chronoRunning;
+  }
+};
+
+// Gestión del temporizador
+const timer = {
+  init() {
+    this.setupControls();
+    this.setupInputs();
+    this.updateDisplay();
+    setInterval(() => this.update(), 1000);
+  },
+
+  setupControls() {
+    const startBtn = document.getElementById('timerStartBtn');
+    const stopBtn = document.getElementById('timerStopBtn');
+    const resetBtn = document.getElementById('timerResetBtn');
+
+    if (startBtn) {
+      startBtn.addEventListener('click', () => this.start());
+    }
+    
+    if (stopBtn) {
+      stopBtn.addEventListener('click', () => this.stop());
+    }
+    
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => this.reset());
+    }
+  },
+
+  setupInputs() {
+    const minutesInput = document.getElementById('minutesInput');
+    const secondsInput = document.getElementById('secondsInput');
+
+    [minutesInput, secondsInput].forEach(input => {
+      if (input) {
+        input.addEventListener('change', () => this.updateFromInputs());
+        input.addEventListener('input', () => this.validateInput(input));
+      }
+    });
+  },
+
+  validateInput(input) {
+    const value = parseInt(input.value);
+    const max = parseInt(input.max);
+    const min = parseInt(input.min);
+    
+    if (value > max) input.value = max;
+    if (value < min) input.value = min;
+  },
+
+  updateFromInputs() {
+    if (!appState.timerRunning) {
+      const minutes = parseInt(document.getElementById('minutesInput')?.value || 0);
+      const seconds = parseInt(document.getElementById('secondsInput')?.value || 0);
+      
+      appState.timerDuration = (minutes * 60) + seconds;
+      appState.timerRemaining = appState.timerDuration;
+      this.updateDisplay();
+      this.updateProgress();
+    }
+  },
+
+  start() {
+    if (!appState.timerRunning && appState.timerDuration > 0) {
+      appState.timerRunning = true;
+      appState.timerStartTime = Date.now();
+      
+      if (appState.timerRemaining === 0) {
+        appState.timerRemaining = appState.timerDuration;
+      }
+      
+      this.showTimerDisplay();
+      this.updateStatus();
+    }
+  },
+
+  stop() {
+    if (appState.timerRunning) {
+      appState.timerRunning = false;
+      this.updateStatus();
+    }
+  },
+
+  reset() {
+    appState.timerRunning = false;
+    this.updateFromInputs();
+    this.hideTimerDisplay();
+    this.updateStatus();
+  },
+
+  update() {
+    if (appState.timerRunning && appState.timerRemaining > 0) {
+      const elapsed = Math.floor((Date.now() - appState.timerStartTime) / 1000);
+      appState.timerRemaining = Math.max(0, appState.timerDuration - elapsed);
+      
+      this.updateDisplay();
+      this.updateProgress();
+      
+      if (appState.timerRemaining === 0) {
+        this.onTimerComplete();
+      }
+    }
+  },
+
+  updateDisplay() {
+    const display = document.getElementById('timerTime');
+    if (display) {
+      const timeToShow = appState.timerRunning ? appState.timerRemaining : appState.timerDuration;
+      display.textContent = utils.formatTimerTime(timeToShow);
+    }
+  },
+
+  updateProgress() {
+    const circle = document.querySelector('.progress-ring-circle');
+    const progressText = document.getElementById('progressText');
+    
+    if (circle && progressText && appState.timerDuration > 0) {
+      const progress = appState.timerRemaining / appState.timerDuration;
+      const circumference = 339.292;
+      const strokeDashoffset = circumference * (1 - progress);
+      
+      circle.style.strokeDashoffset = strokeDashoffset;
+      progressText.textContent = Math.round(progress * 100) + '%';
+    }
+  },
+
+  updateStatus() {
+    const indicator = document.getElementById('timerIndicator');
+    const statusText = document.getElementById('timerStatusText');
+    
+    if (indicator && statusText) {
+      if (appState.timerRunning) {
+        indicator.className = 'status-indicator status-active';
+        statusText.textContent = 'Ejecutándose';
+      } else {
+        indicator.className = 'status-indicator status-inactive';
+        statusText.textContent = 'Detenido';
+      }
+    }
+  },
+
+  showTimerDisplay() {
+    const inputs = document.getElementById('timerInputs');
+    const display = document.getElementById('timerTime');
+    const progress = document.getElementById('timerProgress');
+    const status = document.getElementById('timerStatus');
+    
+    if (inputs) inputs.style.display = 'none';
+    if (display) display.style.display = 'block';
+    if (progress) progress.style.display = 'flex';
+    if (status) status.style.display = 'flex';
+  },
+
+  hideTimerDisplay() {
+    const inputs = document.getElementById('timerInputs');
+    const display = document.getElementById('timerTime');
+    const progress = document.getElementById('timerProgress');
+    const status = document.getElementById('timerStatus');
+    
+    if (inputs) inputs.style.display = 'flex';
+    if (display) display.style.display = 'none';
+    if (progress) progress.style.display = 'none';
+    if (status) status.style.display = 'none';
+  },
+
+  onTimerComplete() {
+    appState.timerRunning = false;
+    this.updateStatus();
+    
+    // Notificación visual y sonora
+    document.body.style.animation = 'pulse 0.5s ease-in-out 3';
+    
+    // Crear notificación del navegador si está disponible
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('¡Temporizador completado!', {
+        body: '¡El tiempo ha terminado!',
+        icon: 'img/RA_10-removebg-preview.png'
+      });
+    }
+    
+    setTimeout(() => {
+      document.body.style.animation = '';
+    }, 1500);
+  }
+};
+
+// Gestión de sensores ambientales
+const environmentalSensors = {
+  init() {
+    this.updateReadings();
+    setInterval(() => this.updateReadings(), 5000);
+  },
+
+  updateReadings() {
+    this.updateTemperature();
+    this.updateHumidity();
+  },
+
+  updateTemperature() {
+    const element = document.getElementById('temperature');
+    if (element) {
+      // Simular lecturas de temperatura entre 18°C y 28°C
+      const temp = Math.round(utils.randomRange(18, 28));
+      element.textContent = temp;
+      
+      // Cambiar color según la temperatura
+      if (temp < 20) {
+        element.style.color = '#3498db';
+      } else if (temp > 25) {
+        element.style.color = '#e74c3c';
+      } else {
+        element.style.color = 'var(--secondary-color)';
+      }
+    }
+  },
+
+  updateHumidity() {
+    const element = document.getElementById('humidity');
+    if (element) {
+      // Simular lecturas de humedad entre 30% y 80%
+      const humidity = Math.round(utils.randomRange(30, 80));
+      element.textContent = humidity;
+      
+      // Cambiar color según la humedad
+      if (humidity < 40) {
+        element.style.color = '#f39c12';
+      } else if (humidity > 70) {
+        element.style.color = '#3498db';
+      } else {
+        element.style.color = 'var(--secondary-color)';
+      }
+    }
+  }
+};
+
+// Gestión del decibelímetro
+const soundMeter = {
+  init() {
+    this.setupMicrophoneToggle();
+    this.simulateReading();
+    this.requestNotificationPermission();
+    setInterval(() => this.simulateReading(), 500);
+  },
+
+  setupMicrophoneToggle() {
+    const toggleBtn = document.getElementById('micToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => this.toggleMicrophone());
+    }
+  },
+
+  async toggleMicrophone() {
+    if (!appState.microphoneActive) {
+      try {
+        await this.startMicrophone();
+      } catch (error) {
+        console.log('Micrófono no disponible, usando simulación');
+        this.updateStatus('Error - Simulación');
+      }
+    } else {
+      this.stopMicrophone();
+    }
+  },
+
+  async startMicrophone() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error('MediaDevices no soportado');
+    }
+
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    
+    appState.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    appState.microphone = appState.audioContext.createMediaStreamSource(stream);
+    appState.analyzer = appState.audioContext.createAnalyser();
+    
+    appState.analyzer.fftSize = 256;
+    appState.microphone.connect(appState.analyzer);
+    
+    appState.microphoneActive = true;
+    this.updateToggleButton();
+    this.updateStatus('Activo');
+    this.startReading();
+  },
+
+  stopMicrophone() {
+    if (appState.audioContext) {
+      appState.audioContext.close();
+      appState.audioContext = null;
+    }
+    
+    appState.microphoneActive = false;
+    appState.microphone = null;
+    appState.analyzer = null;
+    
+    this.updateToggleButton();
+    this.updateStatus('Simulación');
+  },
+
+  startReading() {
+    if (!appState.microphoneActive || !appState.analyzer) return;
+    
+    const dataArray = new Uint8Array(appState.analyzer.frequencyBinCount);
+    
+    const readAudio = () => {
+      if (!appState.microphoneActive) return;
+      
+      appState.analyzer.getByteFrequencyData(dataArray);
+      
+      // Calcular RMS (Root Mean Square) para obtener el nivel de volumen
+      let sum = 0;
+      for (let i = 0; i < dataArray.length; i++) {
+        sum += dataArray[i] * dataArray[i];
+      }
+      const rms = Math.sqrt(sum / dataArray.length);
+      
+      // Convertir a decibelios aproximados
+      const db = Math.round(20 * Math.log10(rms + 1) + 30);
+      this.updateDisplay(Math.min(Math.max(db, 30), 120));
+      
+      requestAnimationFrame(readAudio);
+    };
+    
+    readAudio();
+  },
+
+  simulateReading() {
+    if (!appState.microphoneActive) {
+      // Simular lecturas entre 30 y 85 dB con variaciones naturales
+      const baseLevel = 45;
+      const variation = utils.randomRange(-10, 25);
+      const db = Math.round(baseLevel + variation);
+      this.updateDisplay(Math.min(Math.max(db, 30), 120));
+    }
+  },
+
+  updateDisplay(decibels) {
+    const valueElement = document.getElementById('decibelValue');
+    const levelElement = document.getElementById('soundLevel');
+    const fillElement = document.getElementById('soundFill');
+
+    if (valueElement) {
+      valueElement.textContent = decibels;
+    }
+
+    if (levelElement && fillElement) {
+      let level, levelClass, fillColor, percentage;
+      
+      if (decibels < 50) {
+        level = 'BAJO';
+        levelClass = 'level-low';
+        fillColor = 'var(--success-color)';
+        percentage = (decibels / 50) * 30;
+      } else if (decibels < 80) {
+        level = 'NORMAL';
+        levelClass = 'level-normal';
+        fillColor = 'var(--warning-color)';
+        percentage = 30 + ((decibels - 50) / 30) * 40;
+      } else {
+        level = 'ALTO';
+        levelClass = 'level-high';
+        fillColor = 'var(--accent-color)';
+        percentage = 70 + ((decibels - 80) / 40) * 30;
+      }
+      
+      levelElement.textContent = level;
+      levelElement.className = `sound-level ${levelClass}`;
+      
+      fillElement.style.width = Math.min(percentage, 100) + '%';
+      fillElement.style.background = fillColor;
+    }
+  },
+
+  updateToggleButton() {
+    const toggleBtn = document.getElementById('micToggle');
+    const indicator = document.getElementById('micIndicator');
+    
+    if (toggleBtn) {
+      if (appState.microphoneActive) {
+        toggleBtn.textContent = 'Desactivar Micrófono';
+        toggleBtn.classList.add('active');
+      } else {
+        toggleBtn.textContent = 'Activar Micrófono';
+        toggleBtn.classList.remove('active');
+      }
+    }
+    
+    if (indicator) {
+      indicator.className = `status-indicator ${appState.microphoneActive ? 'status-active' : 'status-inactive'}`;
+    }
+  },
+
+  updateStatus(status) {
+    const statusElement = document.getElementById('micStatus');
+    if (statusElement) {
+      statusElement.textContent = status;
+    }
+  },
+
+  requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }
+};
+
+// Gestión de visibilidad de página
+const pageVisibility = {
+  init() {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        document.body.classList.add('page-hidden');
+      } else {
+        document.body.classList.remove('page-hidden');
+      }
+    });
+  }
+};
+
+// Inicialización de la aplicación
+const app = {
+  async init() {
+    console.log('Inicializando O.R.A. Simulator...');
+    
+    try {
+      // Inicializar todos los módulos
+      navigation.init();
+      clock.init();
+      chronometer.init();
+      timer.init();
+      environmentalSensors.init();
+      soundMeter.init();
+      pageVisibility.init();
+      
+      // Marcar la aplicación como inicializada
+      document.body.classList.add('app-initialized');
+      
+      console.log('O.R.A. Simulator inicializado correctamente');
+      
+    } catch (error) {
+      console.error('Error al inicializar la aplicación:', error);
+    }
+  }
+};
+
+// Iniciar la aplicación cuando el DOM esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => app.init());
+} else {
+  app.init();
+}
+
+// Manejador global de errores
+window.addEventListener('error', (event) => {
+  console.error('Error global:', event.error);
+});
+
+// Exportar para debugging en consola
+window.ORA = {
+  app,
+  appState,
+  utils,
+  navigation,
+  clock,
+  chronometer,
+  timer,
+  environmentalSensors,
+  soundMeter
+};
+</script>
 </body>
 </html>
