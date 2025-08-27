@@ -700,6 +700,201 @@ html {
 .page-hidden * {
   animation-play-state: paused;
 }
+    /* ========================================
+   CÓDIGO CSS RESPONSIVE PARA O.R.A.
+   Agregar al final del archivo CSS principal
+   ======================================== */
+
+/* Responsive design - Tablets y pantallas medianas */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+  
+  section h2 {
+    font-size: 2.2rem;
+  }
+  
+  .simulator-card {
+    padding: 1.8rem;
+  }
+}
+
+/* Responsive design - Móviles y tablets pequeñas */
+@media (max-width: 768px) {
+  /* Mostrar botón hamburguesa */
+  .menu-btn {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1001;
+  }
+
+  /* Ocultar navegación por defecto en móvil */
+  nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    z-index: 999;
+  }
+
+  /* Mostrar navegación cuando esté activa */
+  nav.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  /* Animación de deslizamiento para el menú */
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  /* Estilos para los links en móvil */
+  nav a {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    margin: 0;
+    color: var(--primary-color);
+  }
+
+  /* Container de una sola columna */
+  .container {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  /* Ajustar tamaños de fuente */
+  .time-display {
+    font-size: 2.5rem;
+  }
+
+  .chrono-time, .timer-time {
+    font-size: 2rem;
+  }
+
+  .decibel-value {
+    font-size: 2.5rem;
+  }
+
+  /* Sensores ambientales en una columna */
+  .env-readings {
+    grid-template-columns: 1fr;
+  }
+
+  /* Inputs del temporizador en columna */
+  .timer-inputs {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Controles en columna */
+  .timer-controls, .chrono-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Ajustar header */
+  header {
+    padding: 1rem;
+  }
+
+  /* Ajustar secciones */
+  section {
+    padding: 1.5rem;
+  }
+
+  section h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Responsive design - Móviles pequeños */
+@media (max-width: 480px) {
+  /* Reducir padding de las cards */
+  .simulator-card {
+    padding: 1.5rem;
+  }
+  
+  /* Ajustar títulos de cards */
+  .card-title {
+    font-size: 1.3rem;
+  }
+  
+  /* Reducir tamaños de displays */
+  .time-display {
+    font-size: 2rem;
+  }
+  
+  .chrono-time, .timer-time {
+    font-size: 1.8rem;
+  }
+
+  /* Ajustar header para móviles pequeños */
+  header strong {
+    font-size: 1.4rem;
+  }
+
+  header div {
+    font-size: 1rem;
+  }
+
+  section h2 {
+    font-size: 1.8rem;
+  }
+
+  /* Botones más pequeños */
+  .chrono-btn {
+    padding: 0.6rem 1.2rem;
+    min-width: 90px;
+    font-size: 0.9rem;
+  }
+
+  /* Inputs más pequeños */
+  .time-input {
+    width: 70px;
+    padding: 0.6rem;
+    font-size: 1rem;
+  }
+
+  /* Logo más pequeño */
+  .logo09 {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Responsive design - Móviles muy pequeños */
+@media (max-width: 320px) {
+  .simulator-card {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+  
+  .time-display, .chrono-time, .timer-time {
+    font-size: 1.5rem;
+  }
+  
+  .decibel-value {
+    font-size: 2rem;
+  }
+  
+  section h2 {
+    font-size: 1.5rem;
+  }
+}
   </style>
 </head>
 <body>
